@@ -1,0 +1,39 @@
+{
+	"name": "gatherpress-event-details",
+	"version": "0.1.0",
+	"description": "Labeled details for GatherPress events, such as food, parking, or childcare.",
+	"author": "tsubu",
+	"license": "GPL-2.0-or-later",
+	"keywords": [
+		"gatherpress"
+	],
+	"homepage": "https://github.com/tsubu/gatherpress-event-details#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/tsubu/gatherpress-event-details.git"
+	},
+	"files": [
+		"build",
+		"includes",
+		"languages",
+		"gatherpress-event-details.php",
+		"uninstall.php",
+		"readme.txt"
+	],
+	"devDependencies": {
+		"@wordpress/scripts": "^35.0.0"
+	},
+	"scripts": {
+		"build": "wp-scripts build",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"lint:php": "vendor/bin/phpcs",
+		"lint:phpstan": "vendor/bin/phpstan analyze --memory-limit=1G",
+		"plugin-zip": "npm run build && wp-scripts plugin-zip",
+		"start": "wp-scripts start",
+		"test:unit:js": "wp-scripts test-unit-js",
+		"test:unit:php": "wp-env run tests-cli --env-cwd=wp-content/plugins/gatherpress-event-details vendor/bin/phpunit",
+		"wp-env": "wp-env"
+	}
+}
