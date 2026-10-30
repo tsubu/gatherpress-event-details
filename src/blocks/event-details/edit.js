@@ -5,6 +5,9 @@ import { __ } from '@wordpress/i18n';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
 import { useEntityProp } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+import { Fragment } from '@wordpress/element';
+import { store as editorStore } from '@wordpress/editor';
 
 /**
  * Internal dependencies
@@ -53,15 +56,30 @@ function EventEdit( { postId, postType } ) {
 	const [ meta ] = useEntityProp( 'postType', postType, 'meta', postId );
 	const items = normalizeItems( meta?.[ META_KEY ] ).filter( isDisplayable );
 
+	// Inside a Query Loop the block renders other events; editing those from
+	// here would save them along with the current post, so only preview them.
+	const isCurrentPost = useSelect(
+		( select ) => select( editorStore ).getCurrentPostId() === postId,
+		[ postId ],
+	);
+	const emptyMessage = isCurrentPost
+		? __(
+			'Add details such as food, parking, or childcare in the block settings.',
+			'gatherpress-event-details',
+		)
+		: __( 'This event has no details.', 'gatherpress-event-details' );
+
 	return (
 		<>
-			<InspectorControls>
-				<PanelBody
-					title={ __( 'Event details', 'gatherpress-event-details' ) }
-				>
-					<DetailsEditor postId={ postId } postType={ postType } />
-				</PanelBody>
-			</InspectorControls>
+			{ isCurrentPost && (
+				<InspectorControls>
+					<PanelBody
+						title={ __( 'Event details', 'gatherpress-event-details' ) }
+					>
+						<DetailsEditor postId={ postId } postType={ postType } />
+					</PanelBody>
+				</InspectorControls>
+			) }
 
 			{ 0 < items.length ? (
 				<dl { ...blockProps }>
@@ -75,7 +93,14 @@ function EventEdit( { postId, postType } ) {
 								{ item.label }
 							</dt>
 							<dd className="gatherpress-event-details__value">
-								{ item.value }
+								{ item.value
+									.split( '\n' )
+									.map( ( line, lineIndex ) => (
+										<Fragment key={ lineIndex }>
+											{ 0 < lineIndex && <br /> }
+											{ line }
+										</Fragment>
+									) ) }
 							</dd>
 						</div>
 					) ) }
@@ -83,10 +108,7 @@ function EventEdit( { postId, postType } ) {
 			) : (
 				<div { ...blockProps }>
 					<p className="gatherpress-event-details__placeholder">
-						{ __(
-							'Add details such as food, parking, or childcare in the block settings.',
-							'gatherpress-event-details',
-						) }
+						{ emptyMessage }
 					</p>
 				</div>
 			) }
