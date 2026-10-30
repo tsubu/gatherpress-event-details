@@ -48,11 +48,11 @@ export default function DetailsEditor( { postId, postType } ) {
 		'postType',
 		postType,
 		'meta',
-		postId
+		postId,
 	);
 	const listId = useInstanceId(
 		DetailsEditor,
-		'gatherpress-event-details-labels'
+		'gatherpress-event-details-labels',
 	);
 	const { labelSuggestions, maxItems } = getConfig();
 	const items = normalizeItems( meta?.[ META_KEY ] );
@@ -65,7 +65,6 @@ export default function DetailsEditor( { postId, postType } ) {
 			{ items.map( ( item, index ) => (
 				<VStack
 					// Items have no stable ID; the index is their identity in this list.
-					// eslint-disable-next-line react/no-array-index-key
 					key={ index }
 					spacing={ 2 }
 					className="gatherpress-event-details-editor__item"
@@ -75,7 +74,7 @@ export default function DetailsEditor( { postId, postType } ) {
 						label={ sprintf(
 							/* translators: %d: Position of the detail in the list. */
 							__( 'Label %d', 'gatherpress-event-details' ),
-							index + 1
+							index + 1,
 						) }
 						value={ item.label }
 						list={ labelSuggestions.length ? listId : undefined }
@@ -84,7 +83,10 @@ export default function DetailsEditor( { postId, postType } ) {
 						}
 					/>
 					<TextareaControl
-						label={ __( 'Description', 'gatherpress-event-details' ) }
+						label={ __(
+							'Description',
+							'gatherpress-event-details',
+						) }
 						value={ item.value }
 						rows={ 2 }
 						onChange={ ( value ) =>
@@ -95,7 +97,10 @@ export default function DetailsEditor( { postId, postType } ) {
 						<Button
 							size="small"
 							icon="arrow-up-alt2"
-							label={ __( 'Move up', 'gatherpress-event-details' ) }
+							label={ __(
+								'Move up',
+								'gatherpress-event-details',
+							) }
 							disabled={ 0 === index }
 							accessibleWhenDisabled
 							onClick={ () =>
@@ -105,7 +110,10 @@ export default function DetailsEditor( { postId, postType } ) {
 						<Button
 							size="small"
 							icon="arrow-down-alt2"
-							label={ __( 'Move down', 'gatherpress-event-details' ) }
+							label={ __(
+								'Move down',
+								'gatherpress-event-details',
+							) }
 							disabled={ items.length - 1 === index }
 							accessibleWhenDisabled
 							onClick={ () =>
@@ -116,7 +124,9 @@ export default function DetailsEditor( { postId, postType } ) {
 							size="small"
 							variant="tertiary"
 							isDestructive
-							onClick={ () => setItems( removeItem( items, index ) ) }
+							onClick={ () =>
+								setItems( removeItem( items, index ) )
+							}
 						>
 							{ __( 'Remove', 'gatherpress-event-details' ) }
 						</Button>
@@ -128,7 +138,7 @@ export default function DetailsEditor( { postId, postType } ) {
 				<Notice status="warning" isDismissible={ false }>
 					{ __(
 						'Details need both a label and a description to appear on the event.',
-						'gatherpress-event-details'
+						'gatherpress-event-details',
 					) }
 				</Notice>
 			) }
@@ -142,7 +152,7 @@ export default function DetailsEditor( { postId, postType } ) {
 				{ __( 'Add detail', 'gatherpress-event-details' ) }
 			</Button>
 
-			{ labelSuggestions.length > 0 && (
+			{ 0 < labelSuggestions.length && (
 				<datalist id={ listId }>
 					{ labelSuggestions.map( ( suggestion ) => (
 						<option key={ suggestion } value={ suggestion } />

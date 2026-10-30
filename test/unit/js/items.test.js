@@ -72,9 +72,15 @@ describe( 'normalizeItems', () => {
 		expect( normalizeItems( 'text' ) ).toEqual( [] );
 	} );
 
+	it( 'keeps string fields', () => {
+		expect(
+			normalizeItems( [ { label: 'Food', value: 'Lunch' } ] ),
+		).toEqual( [ { label: 'Food', value: 'Lunch' } ] );
+	} );
+
 	it( 'drops non-objects and fills missing fields', () => {
 		expect(
-			normalizeItems( [ null, 'x', { label: 'Food' }, { value: 3 } ] )
+			normalizeItems( [ null, 'x', { label: 'Food' }, { value: 3 } ] ),
 		).toEqual( [
 			{ label: 'Food', value: '' },
 			{ label: '', value: '' },
@@ -150,7 +156,9 @@ describe( 'moveItem', () => {
 
 describe( 'isDisplayable', () => {
 	it( 'needs both a label and a value', () => {
-		expect( isDisplayable( { label: 'Food', value: 'Lunch' } ) ).toBe( true );
+		expect( isDisplayable( { label: 'Food', value: 'Lunch' } ) ).toBe(
+			true,
+		);
 		expect( isDisplayable( { label: 'Food', value: ' ' } ) ).toBe( false );
 		expect( isDisplayable( { label: ' ', value: 'Lunch' } ) ).toBe( false );
 	} );

@@ -30,7 +30,9 @@ import {
 function Placeholder( { message } ) {
 	return (
 		<div { ...useBlockProps() }>
-			<p className="gatherpress-event-details__placeholder">{ message }</p>
+			<p className="gatherpress-event-details__placeholder">
+				{ message }
+			</p>
 		</div>
 	);
 }
@@ -61,12 +63,11 @@ function EventEdit( { postId, postType } ) {
 				</PanelBody>
 			</InspectorControls>
 
-			{ items.length > 0 ? (
+			{ 0 < items.length ? (
 				<dl { ...blockProps }>
 					{ items.map( ( item, index ) => (
 						<div
 							// Items have no stable ID; the index is their identity in this list.
-							// eslint-disable-next-line react/no-array-index-key
 							key={ index }
 							className="gatherpress-event-details__item"
 						>
@@ -84,7 +85,7 @@ function EventEdit( { postId, postType } ) {
 					<p className="gatherpress-event-details__placeholder">
 						{ __(
 							'Add details such as food, parking, or childcare in the block settings.',
-							'gatherpress-event-details'
+							'gatherpress-event-details',
 						) }
 					</p>
 				</div>
@@ -98,8 +99,10 @@ function EventEdit( { postId, postType } ) {
  *
  * @since 0.1.0
  *
- * @param {Object} props         Component props.
- * @param {Object} props.context Block context.
+ * @param {Object} props                  Component props.
+ * @param {Object} props.context          Block context.
+ * @param {number} props.context.postId   The post ID the block renders for.
+ * @param {string} props.context.postType The post type the block renders for.
  *
  * @return {Element} The block editor.
  */
@@ -112,7 +115,7 @@ export default function Edit( { context: { postId, postType } } ) {
 		<Placeholder
 			message={ __(
 				'Event details appear here on each event.',
-				'gatherpress-event-details'
+				'gatherpress-event-details',
 			) }
 		/>
 	);

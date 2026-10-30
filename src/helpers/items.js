@@ -99,7 +99,7 @@ export function addItem( items, maxItems = DEFAULT_CONFIG.maxItems ) {
  */
 export function updateItem( items, index, changes ) {
 	return items.map( ( item, current ) =>
-		current === index ? { ...item, ...changes } : item
+		current === index ? { ...item, ...changes } : item,
 	);
 }
 
@@ -131,8 +131,8 @@ export function removeItem( items, index ) {
 export function moveItem( items, from, to ) {
 	if (
 		from === to ||
-		from < 0 ||
-		to < 0 ||
+		0 > from ||
+		0 > to ||
 		from >= items.length ||
 		to >= items.length
 	) {

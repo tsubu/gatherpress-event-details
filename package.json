@@ -20,6 +20,17 @@
 		"uninstall.php",
 		"readme.txt"
 	],
+	"dependencies": {
+		"@wordpress/block-editor": "^15.14.0",
+		"@wordpress/blocks": "^15.14.0",
+		"@wordpress/components": "^32.3.0",
+		"@wordpress/compose": "^7.41.0",
+		"@wordpress/core-data": "^7.41.0",
+		"@wordpress/data": "^10.41.0",
+		"@wordpress/editor": "^14.41.0",
+		"@wordpress/i18n": "^6.14.0",
+		"@wordpress/plugins": "^7.41.0"
+	},
 	"devDependencies": {
 		"@wordpress/scripts": "^35.0.0"
 	},

@@ -28,7 +28,7 @@ export default function DocumentPanel() {
 			postId: select( editorStore ).getCurrentPostId(),
 			postType: select( editorStore ).getCurrentPostType(),
 		} ),
-		[]
+		[],
 	);
 
 	if ( ! isEventPostType( postType ) ) {
@@ -42,7 +42,7 @@ export default function DocumentPanel() {
 				label={ __( 'Event details', 'gatherpress-event-details' ) }
 				help={ __(
 					'Shown on the event by the Event Details block.',
-					'gatherpress-event-details'
+					'gatherpress-event-details',
 				) }
 			>
 				<DetailsEditor postId={ postId } postType={ postType } />
