@@ -30,6 +30,7 @@ define(
 	get_file_data( __FILE__, array( 'Version' => 'Version' ), 'plugin' )['Version']
 );
 define( 'GATHERPRESS_EVENT_DETAILS_CORE_PATH', __DIR__ );
+define( 'GATHERPRESS_EVENT_DETAILS_MIN_GATHERPRESS_VERSION', '0.36.1' );
 
 /**
  * Adds the GatherPress_Event_Details namespace to the autoloader.
@@ -59,9 +60,47 @@ add_filter( 'gatherpress_autoloader', 'gatherpress_event_details_autoloader' );
  * @return void
  */
 function gatherpress_event_details_setup(): void {
+	if ( ! gatherpress_event_details_is_gatherpress_compatible() ) {
+		add_action(
+			'admin_notices',
+			static function (): void {
+				wp_admin_notice(
+					sprintf(
+						/* translators: %s: minimum required GatherPress version. */
+						esc_html__(
+							'GatherPress Event Details requires GatherPress %s or later.',
+							'gatherpress-event-details'
+						),
+						esc_html( GATHERPRESS_EVENT_DETAILS_MIN_GATHERPRESS_VERSION )
+					),
+					array( 'type' => 'error' )
+				);
+			}
+		);
+
+		return;
+	}
+
 	GatherPress_Event_Details\Setup::get_instance();
 }
 add_action( 'gatherpress_loaded', 'gatherpress_event_details_setup' );
+
+/**
+ * Checks whether the active GatherPress version meets the plugin requirement.
+ *
+ * @since 0.1.0
+ *
+ * @param string|null $version The version to check, or null for the active version.
+ *
+ * @return bool Whether the GatherPress version is supported.
+ */
+function gatherpress_event_details_is_gatherpress_compatible( ?string $version = null ): bool {
+	if ( null === $version ) {
+		$version = defined( 'GATHERPRESS_VERSION' ) ? GATHERPRESS_VERSION : '';
+	}
+
+	return version_compare( $version, GATHERPRESS_EVENT_DETAILS_MIN_GATHERPRESS_VERSION, '>=' );
+}
 
 /**
  * Surfaces why GatherPress Event Details is inert when GatherPress is absent.

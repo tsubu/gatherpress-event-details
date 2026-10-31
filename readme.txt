@@ -18,10 +18,11 @@ GatherPress Event Details is a companion plugin for GatherPress. Organizers add 
 * New events include the Event Details block after the Online Event block.
 * Details without both a label and a description are not shown.
 * Stored as post meta, available in the REST API and in WordPress export files.
+* Requires GatherPress 0.36.1 or later.
 
 == Installation ==
 
-1. Install and activate GatherPress.
+1. Install and activate GatherPress 0.36.1 or later.
 2. Upload the plugin folder to `/wp-content/plugins/` and activate it.
 3. Edit an event and open Event settings to add details.
 
