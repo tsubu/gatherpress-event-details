@@ -1,0 +1,33 @@
+.wp-block-gatherpress-event-details-event-details {
+	display: grid;
+	gap: var(--gatherpress-event-details--row-gap, 0.5rem);
+
+	.gatherpress-event-details__item {
+		display: grid;
+		grid-template-columns: minmax(min(8rem, 40%), 40%) minmax(0, 1fr);
+		gap: 0.25rem 1rem;
+	}
+
+	.gatherpress-event-details__label {
+		font-weight: var(--gatherpress-event-details--label-font-weight, 600);
+		overflow-wrap: anywhere;
+	}
+
+	.gatherpress-event-details__value {
+		min-width: 0;
+		margin: 0;
+		overflow-wrap: anywhere;
+	}
+
+	.gatherpress-event-details__placeholder {
+		margin: 0;
+		opacity: 0.7;
+	}
+}
+
+@media screen and (width <= 600px) {
+
+	.wp-block-gatherpress-event-details-event-details .gatherpress-event-details__item {
+		grid-template-columns: 1fr;
+	}
+}
