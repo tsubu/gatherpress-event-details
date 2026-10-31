@@ -248,7 +248,7 @@ final class Block {
 				self::EVENT_STARTER_PATTERN !== ( $pattern['name'] ?? '' )
 				|| ! is_string( $content )
 				|| false === $marker_position
-				|| str_contains( $content, $block )
+				|| has_block( self::BLOCK_NAME, $content )
 			) {
 				continue;
 			}
