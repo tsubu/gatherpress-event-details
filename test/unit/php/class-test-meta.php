@@ -25,7 +25,7 @@ final class Test_Meta extends WP_UnitTestCase {
 	public function set_up(): void {
 		parent::set_up();
 
-		Meta::get_instance()->register_for_event_post_types();
+		Meta::get_instance()->maybe_register( 'gatherpress_event' );
 	}
 
 	/**
@@ -35,7 +35,6 @@ final class Test_Meta extends WP_UnitTestCase {
 	 */
 	public function tear_down(): void {
 		unregister_post_type( 'test_production' );
-		unregister_post_type( 'test_late_event' );
 
 		parent::tear_down();
 	}
@@ -94,22 +93,6 @@ final class Test_Meta extends WP_UnitTestCase {
 		);
 
 		$this->assertArrayHasKey( Meta::META_KEY, get_registered_meta_keys( 'post', 'test_production' ) );
-	}
-
-	/**
-	 * Registers the meta when the support is added after the post type.
-	 *
-	 * @covers ::register_for_event_post_types
-	 *
-	 * @return void
-	 */
-	public function test_registers_when_support_is_added_later(): void {
-		register_post_type( 'test_late_event', array( 'show_in_rest' => true ) );
-		add_post_type_support( 'test_late_event', 'gatherpress-event-date' );
-
-		Meta::get_instance()->register_for_event_post_types();
-
-		$this->assertArrayHasKey( Meta::META_KEY, get_registered_meta_keys( 'post', 'test_late_event' ) );
 	}
 
 	/**

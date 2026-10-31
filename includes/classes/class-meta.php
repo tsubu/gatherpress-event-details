@@ -89,9 +89,8 @@ final class Meta {
 	 * Sets up the hooks.
 	 *
 	 * `registered_post_type` covers post types that declare the support in
-	 * `register_post_type()`, including GatherPress's own. The `init` pass at
-	 * priority 11 covers post types that receive it afterwards through
-	 * `add_post_type_support()`.
+	 * `register_post_type()`, including GatherPress's own. GatherPress requires
+	 * this declaration timing so its own per-post-type hooks are wired too.
 	 *
 	 * @since 0.1.0
 	 *
@@ -99,20 +98,6 @@ final class Meta {
 	 */
 	protected function setup_hooks(): void {
 		add_action( 'registered_post_type', array( $this, 'maybe_register' ) );
-		add_action( 'init', array( $this, 'register_for_event_post_types' ), 11 );
-	}
-
-	/**
-	 * Registers the meta on every post type that currently acts as an event.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @return void
-	 */
-	public function register_for_event_post_types(): void {
-		foreach ( get_post_types_by_support( self::EVENT_SUPPORT ) as $post_type ) {
-			$this->maybe_register( $post_type );
-		}
 	}
 
 	/**
