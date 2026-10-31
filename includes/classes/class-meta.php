@@ -114,6 +114,8 @@ final class Meta {
 			return;
 		}
 
+		add_filter( "rest_prepare_{$post_type}", array( $this, 'filter_rest_response' ), 10, 3 );
+
 		$registered_meta = get_registered_meta_keys( 'post', $post_type );
 
 		if ( isset( $registered_meta[ self::META_KEY ] ) ) {
@@ -147,6 +149,44 @@ final class Meta {
 				),
 			)
 		);
+	}
+
+	/**
+	 * Hides password-protected event details from public REST responses.
+	 *
+	 * WordPress hides protected post content in the REST API but includes
+	 * registered post meta in the same response. Keep this meta aligned with
+	 * the rendered block unless the reader has passed the post password or can
+	 * edit the post.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param \WP_REST_Response $response The REST response.
+	 * @param \WP_Post          $post     The post object.
+	 * @param \WP_REST_Request  $request  The REST request.
+	 *
+	 * @return \WP_REST_Response The filtered REST response.
+	 */
+	public function filter_rest_response(
+		\WP_REST_Response $response,
+		\WP_Post $post,
+		\WP_REST_Request $request
+	): \WP_REST_Response {
+		$password = $request->get_param( 'password' );
+
+		if (
+			! post_password_required( $post )
+			|| current_user_can( 'edit_post', $post->ID )
+			|| ( is_string( $password ) && '' !== $post->post_password && hash_equals( $post->post_password, $password ) )
+		) {
+			return $response;
+		}
+
+		if ( isset( $response->data['meta'][ self::META_KEY ] ) ) {
+			unset( $response->data['meta'][ self::META_KEY ] );
+		}
+
+		return $response;
 	}
 
 	/**
