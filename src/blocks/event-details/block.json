@@ -12,6 +12,7 @@
 	"usesContext": [ "postId", "postType" ],
 	"supports": {
 		"html": false,
+		"multiple": false,
 		"align": [ "wide", "full" ],
 		"color": {
 			"text": true,
