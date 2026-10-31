@@ -11,6 +11,7 @@ namespace GatherPress_Event_Details;
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
+use GatherPress\Core\Event\Event;
 use GatherPress\Core\Traits\Singleton;
 use WP_Block;
 
@@ -280,7 +281,12 @@ final class Block {
 		$post_id = (int) ( $block->context['postId'] ?? get_the_ID() );
 		$items   = array();
 
-		if ( $post_id && post_type_supports( (string) get_post_type( $post_id ), Meta::EVENT_SUPPORT ) ) {
+		if (
+			$post_id
+			&& post_type_supports( (string) get_post_type( $post_id ), Meta::EVENT_SUPPORT )
+			&& Event::is_viewable( $post_id )
+			&& ! post_password_required( $post_id )
+		) {
 			$items = Meta::get_instance()->get_displayable_items( $post_id );
 		}
 
