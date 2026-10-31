@@ -6,7 +6,7 @@ It follows the direction suggested in [GatherPress#2236](https://github.com/Gath
 
 ## What it does
 
-- Adds an **Event details** list to the *Event settings* sidebar panel of every post type that declares `gatherpress-event-date` support.
+- Adds an **Event details** list to the *Event settings* sidebar panel of event post types that declare `gatherpress-event-date` support and are enabled in the block editor (`show_in_rest`).
 - Adds an **Event Details** block (`gatherpress-event-details/event-details`) that prints the list as a description list (`<dl>`). Details need both a label and a description to be shown; the block prints nothing when there are none.
 - Places the block after the Online Event block in GatherPress's *Event with RSVP* starter pattern and the `gatherpress/event-template` layout. Existing events whose content does not already include the block need it inserted manually.
 

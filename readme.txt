@@ -12,7 +12,7 @@ Add labeled details to GatherPress events, such as food and drinks, parking, or 
 
 == Description ==
 
-GatherPress Event Details is a companion plugin for GatherPress. Organizers add their own labeled details to an event in the Event settings panel, and the Event Details block shows them on the event page.
+GatherPress Event Details is a companion plugin for GatherPress. Organizers add their own labeled details to a REST-enabled event in the Event settings panel, and the Event Details block shows them on the event page.
 
 * Any label: food and drinks, parking, accessibility, childcare, language, what to bring.
 * The Event with RSVP starter pattern and the `gatherpress/event-template` layout include the Event Details block after Online Event.
