@@ -35,6 +35,8 @@ describe( 'getConfig', () => {
 			postTypes: [ 'gatherpress_event' ],
 			labelSuggestions: [],
 			maxItems: 20,
+			maxLabelLength: 100,
+			maxValueLength: 1000,
 		} );
 	} );
 
@@ -42,12 +44,16 @@ describe( 'getConfig', () => {
 		globalThis.gatherpressEventDetails = {
 			postTypes: [ 'production' ],
 			maxItems: 5,
+			maxLabelLength: 12,
+			maxValueLength: 34,
 		};
 
 		expect( getConfig() ).toEqual( {
 			postTypes: [ 'production' ],
 			labelSuggestions: [],
 			maxItems: 5,
+			maxLabelLength: 12,
+			maxValueLength: 34,
 		} );
 	} );
 } );

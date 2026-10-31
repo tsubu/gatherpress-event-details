@@ -3,7 +3,7 @@
  *
  * Mirrors GatherPress's own config, so the plugin is linted with the same
  * WordPress rules as the code it extends. The plugin is resolved through
- * @wordpress/scripts rather than declared again.
+ * the WordPress scripts package rather than declared again.
  */
 
 /**
@@ -12,7 +12,7 @@
 const path = require( 'path' );
 
 const scriptsDir = path.dirname(
-	require.resolve( '@wordpress/scripts/package.json' )
+	require.resolve( '@wordpress/scripts/package.json' ),
 );
 const requireFromScripts = ( name ) =>
 	require( require.resolve( name, { paths: [ scriptsDir ] } ) );

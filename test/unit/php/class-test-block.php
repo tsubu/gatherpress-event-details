@@ -172,6 +172,8 @@ final class Test_Block extends WP_UnitTestCase {
 		$this->assertSame( array( 'Food', 'Wi-Fi' ), $config['labelSuggestions'] );
 		$this->assertContains( 'gatherpress_event', $config['postTypes'] );
 		$this->assertSame( Meta::MAX_ITEMS, $config['maxItems'] );
+		$this->assertSame( Meta::MAX_LABEL_LENGTH, $config['maxLabelLength'] );
+		$this->assertSame( Meta::MAX_VALUE_LENGTH, $config['maxValueLength'] );
 	}
 
 	/**

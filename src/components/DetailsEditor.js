@@ -54,7 +54,8 @@ export default function DetailsEditor( { postId, postType } ) {
 		DetailsEditor,
 		'gatherpress-event-details-labels',
 	);
-	const { labelSuggestions, maxItems } = getConfig();
+	const { labelSuggestions, maxItems, maxLabelLength, maxValueLength } =
+		getConfig();
 	const items = normalizeItems( meta?.[ META_KEY ] );
 	const hasIncomplete = items.some( ( item ) => ! isDisplayable( item ) );
 
@@ -76,6 +77,15 @@ export default function DetailsEditor( { postId, postType } ) {
 							__( 'Label %d', 'gatherpress-event-details' ),
 							index + 1,
 						) }
+						maxLength={ maxLabelLength }
+						help={ sprintf(
+							/* translators: %d: maximum number of characters. */
+							__(
+								'Maximum %d characters.',
+								'gatherpress-event-details',
+							),
+							maxLabelLength,
+						) }
 						value={ item.label }
 						list={ labelSuggestions.length ? listId : undefined }
 						onChange={ ( label ) =>
@@ -86,6 +96,15 @@ export default function DetailsEditor( { postId, postType } ) {
 						label={ __(
 							'Description',
 							'gatherpress-event-details',
+						) }
+						maxLength={ maxValueLength }
+						help={ sprintf(
+							/* translators: %d: maximum number of characters. */
+							__(
+								'Maximum %d characters.',
+								'gatherpress-event-details',
+							),
+							maxValueLength,
 						) }
 						value={ item.value }
 						rows={ 2 }

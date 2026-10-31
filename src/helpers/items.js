@@ -20,6 +20,8 @@ const DEFAULT_CONFIG = {
 	postTypes: [ 'gatherpress_event' ],
 	labelSuggestions: [],
 	maxItems: 20,
+	maxLabelLength: 100,
+	maxValueLength: 1000,
 };
 
 /**

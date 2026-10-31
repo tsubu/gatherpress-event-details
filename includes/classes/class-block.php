@@ -134,13 +134,21 @@ final class Block {
 	 *
 	 * @since 0.1.0
 	 *
-	 * @return array{postTypes: string[], labelSuggestions: string[], maxItems: int} The configuration.
+	 * @return array{
+	 *     postTypes: string[],
+	 *     labelSuggestions: string[],
+	 *     maxItems: int,
+	 *     maxLabelLength: int,
+	 *     maxValueLength: int
+	 * } The configuration.
 	 */
 	public function get_editor_config(): array {
 		return array(
 			'postTypes'        => array_values( get_post_types_by_support( Meta::EVENT_SUPPORT ) ),
 			'labelSuggestions' => $this->get_label_suggestions(),
 			'maxItems'         => Meta::MAX_ITEMS,
+			'maxLabelLength'   => Meta::MAX_LABEL_LENGTH,
+			'maxValueLength'   => Meta::MAX_VALUE_LENGTH,
 		);
 	}
 
