@@ -61,23 +61,6 @@ add_filter( 'gatherpress_autoloader', 'gatherpress_event_details_autoloader' );
  */
 function gatherpress_event_details_setup(): void {
 	if ( ! gatherpress_event_details_is_gatherpress_compatible() ) {
-		add_action(
-			'admin_notices',
-			static function (): void {
-				wp_admin_notice(
-					sprintf(
-						/* translators: %s: minimum required GatherPress version. */
-						esc_html__(
-							'GatherPress Event Details requires GatherPress %s or later.',
-							'gatherpress-event-details'
-						),
-						esc_html( GATHERPRESS_EVENT_DETAILS_MIN_GATHERPRESS_VERSION )
-					),
-					array( 'type' => 'error' )
-				);
-			}
-		);
-
 		return;
 	}
 
@@ -103,29 +86,37 @@ function gatherpress_event_details_is_gatherpress_compatible( ?string $version =
 }
 
 /**
- * Surfaces why GatherPress Event Details is inert when GatherPress is absent.
+ * Surfaces why GatherPress Event Details is inert when GatherPress is absent or too old.
  *
  * Stays on `plugins_loaded` because it must run in exactly the case where
- * `gatherpress_loaded` never fires.
+ * `gatherpress_loaded` never fires, including on GatherPress versions before 0.34.1.
  *
  * @since 0.1.0
  *
  * @return void
  */
 function gatherpress_event_details_maybe_notify_missing_gatherpress(): void {
-	if ( defined( 'GATHERPRESS_VERSION' ) ) {
+	if ( ! defined( 'GATHERPRESS_VERSION' ) ) {
+		$message = esc_html__( 'GatherPress Event Details requires GatherPress.', 'gatherpress-event-details' );
+	} elseif ( ! gatherpress_event_details_is_gatherpress_compatible() ) {
+		$message = sprintf(
+			/* translators: %s: minimum required GatherPress version. */
+			esc_html__(
+				'GatherPress Event Details requires GatherPress %s or later.',
+				'gatherpress-event-details'
+			),
+			esc_html( GATHERPRESS_EVENT_DETAILS_MIN_GATHERPRESS_VERSION )
+		);
+	} else {
 		return;
 	}
 
-	add_action(
-		'admin_notices',
-		static function (): void {
-			wp_admin_notice(
-				esc_html__( 'GatherPress Event Details requires GatherPress.', 'gatherpress-event-details' ),
-				array( 'type' => 'error' )
-			);
-		}
-	);
+	$show_notice = static function () use ( $message ): void {
+		wp_admin_notice( $message, array( 'type' => 'error' ) );
+	};
+
+	add_action( 'admin_notices', $show_notice );
+	add_action( 'network_admin_notices', $show_notice );
 }
 add_action( 'plugins_loaded', 'gatherpress_event_details_maybe_notify_missing_gatherpress' );
 
