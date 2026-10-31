@@ -77,15 +77,6 @@ final class Meta {
 	const MAX_VALUE_LENGTH = 1000;
 
 	/**
-	 * Post types the meta has been registered on.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @var string[]
-	 */
-	private array $registered = array();
-
-	/**
 	 * Constructor for the Meta class.
 	 *
 	 * @since 0.1.0
@@ -134,10 +125,13 @@ final class Meta {
 	 * @return void
 	 */
 	public function maybe_register( string $post_type ): void {
-		if (
-			in_array( $post_type, $this->registered, true )
-			|| ! post_type_supports( $post_type, self::EVENT_SUPPORT )
-		) {
+		if ( ! post_type_supports( $post_type, self::EVENT_SUPPORT ) ) {
+			return;
+		}
+
+		$registered_meta = get_registered_meta_keys( 'post', $post_type );
+
+		if ( isset( $registered_meta[ self::META_KEY ] ) ) {
 			return;
 		}
 
@@ -168,8 +162,6 @@ final class Meta {
 				),
 			)
 		);
-
-		$this->registered[] = $post_type;
 	}
 
 	/**

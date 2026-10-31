@@ -18,6 +18,17 @@ use WP_UnitTestCase;
 final class Test_Meta extends WP_UnitTestCase {
 
 	/**
+	 * Re-registers the plugin meta after the test suite resets its registry.
+	 *
+	 * @return void
+	 */
+	public function set_up(): void {
+		parent::set_up();
+
+		Meta::get_instance()->register_for_event_post_types();
+	}
+
+	/**
 	 * Cleans up the post types registered by a test.
 	 *
 	 * @return void
@@ -37,6 +48,21 @@ final class Test_Meta extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function test_registers_on_gatherpress_event(): void {
+		$this->assertArrayHasKey( Meta::META_KEY, get_registered_meta_keys( 'post', 'gatherpress_event' ) );
+	}
+
+	/**
+	 * Restores the meta when the registered-meta registry loses its entry.
+	 *
+	 * @covers ::maybe_register
+	 *
+	 * @return void
+	 */
+	public function test_reregisters_after_meta_registry_reset(): void {
+		unregister_meta_key( 'post', Meta::META_KEY, 'gatherpress_event' );
+
+		Meta::get_instance()->maybe_register( 'gatherpress_event' );
+
 		$this->assertArrayHasKey( Meta::META_KEY, get_registered_meta_keys( 'post', 'gatherpress_event' ) );
 	}
 
