@@ -241,18 +241,24 @@ final class Block {
 		$block  = sprintf( '<!-- wp:%s /-->', self::BLOCK_NAME );
 
 		foreach ( $patterns as $key => $pattern ) {
-			$content = $pattern['content'] ?? '';
+			$content         = $pattern['content'] ?? '';
+			$marker_position = is_string( $content ) ? strpos( $content, $marker ) : false;
 
 			if (
 				self::EVENT_STARTER_PATTERN !== ( $pattern['name'] ?? '' )
 				|| ! is_string( $content )
-				|| ! str_contains( $content, $marker )
+				|| false === $marker_position
 				|| str_contains( $content, $block )
 			) {
 				continue;
 			}
 
-			$patterns[ $key ]['content'] = str_replace( $marker, $marker . "\n" . $block, $content );
+			$patterns[ $key ]['content'] = substr_replace(
+				$content,
+				$marker . "\n" . $block,
+				$marker_position,
+				strlen( $marker )
+			);
 		}
 
 		return $patterns;
