@@ -97,21 +97,27 @@ function gatherpress_event_details_is_gatherpress_compatible( ?string $version =
  */
 function gatherpress_event_details_maybe_notify_missing_gatherpress(): void {
 	if ( ! defined( 'GATHERPRESS_VERSION' ) ) {
-		$message = esc_html__( 'GatherPress Event Details requires GatherPress.', 'gatherpress-event-details' );
+		$notice_type = 'missing';
 	} elseif ( ! gatherpress_event_details_is_gatherpress_compatible() ) {
-		$message = sprintf(
-			/* translators: %s: minimum required GatherPress version. */
-			esc_html__(
-				'GatherPress Event Details requires GatherPress %s or later.',
-				'gatherpress-event-details'
-			),
-			esc_html( GATHERPRESS_EVENT_DETAILS_MIN_GATHERPRESS_VERSION )
-		);
+		$notice_type = 'outdated';
 	} else {
 		return;
 	}
 
-	$show_notice = static function () use ( $message ): void {
+	$show_notice = static function () use ( $notice_type ): void {
+		if ( 'missing' === $notice_type ) {
+			$message = esc_html__( 'GatherPress Event Details requires GatherPress.', 'gatherpress-event-details' );
+		} else {
+			$message = sprintf(
+				/* translators: %s: minimum required GatherPress version. */
+				esc_html__(
+					'GatherPress Event Details requires GatherPress %s or later.',
+					'gatherpress-event-details'
+				),
+				esc_html( GATHERPRESS_EVENT_DETAILS_MIN_GATHERPRESS_VERSION )
+			);
+		}
+
 		wp_admin_notice( $message, array( 'type' => 'error' ) );
 	};
 
