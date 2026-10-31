@@ -33,6 +33,7 @@
 		"@wordpress/plugins": "^7.41.0"
 	},
 	"devDependencies": {
+		"@wordpress/env": "^12.0.0",
 		"@wordpress/scripts": "^35.0.0"
 	},
 	"scripts": {
