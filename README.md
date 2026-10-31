@@ -12,7 +12,7 @@ It follows the direction suggested in [GatherPress#2236](https://github.com/Gath
 
 ## Data
 
-The details are stored in one post meta value, `gatherpress_event_details`, as an ordered list of `{ "label": string, "value": string }` objects. It is exposed through the REST API (`meta.gatherpress_event_details`), travels with WXR export and import, and is deleted on uninstall.
+The details are stored in one post meta value, `gatherpress_event_details`, as an ordered list of `{ "label": string, "value": string }` objects. The `meta.gatherpress_event_details` REST field is available when the event post type exposes a REST API (`show_in_rest`). GatherPress adds the required `custom-fields` support to post types that declare `gatherpress-event-date`. The value travels with WXR export and import and is deleted on uninstall.
 
 Limits: 20 details per event, 100 characters per label, 1,000 characters per description.
 

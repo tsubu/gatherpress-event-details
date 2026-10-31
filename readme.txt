@@ -18,7 +18,7 @@ GatherPress Event Details is a companion plugin for GatherPress. Organizers add 
 * The Event with RSVP starter pattern and the `gatherpress/event-template` layout include the Event Details block after Online Event.
 * Add the block manually to existing events if their content does not already include it.
 * Details without both a label and a description are not shown.
-* Stored as post meta, available in the REST API and in WordPress export files.
+* Stored as post meta, available in the REST API when the event post type enables `show_in_rest`, and in WordPress export files.
 * Requires GatherPress 0.36.1 or later.
 
 == Installation ==
