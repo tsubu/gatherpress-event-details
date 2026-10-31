@@ -162,6 +162,38 @@ final class Test_Meta extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Treats non-scalar field values as empty without raising conversion errors.
+	 *
+	 * @covers ::sanitize
+	 *
+	 * @return void
+	 */
+	public function test_sanitize_non_scalar_fields(): void {
+		$result = Meta::get_instance()->sanitize(
+			array(
+				array(
+					'label' => array( 'nested' ),
+					'value' => '',
+				),
+				array(
+					'label' => new \stdClass(),
+					'value' => 'Lunch',
+				),
+			)
+		);
+
+		$this->assertSame(
+			array(
+				array(
+					'label' => '',
+					'value' => 'Lunch',
+				),
+			),
+			$result
+		);
+	}
+
+	/**
 	 * Trims fields to their maximum length.
 	 *
 	 * @covers ::sanitize

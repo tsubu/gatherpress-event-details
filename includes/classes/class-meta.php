@@ -206,10 +206,12 @@ final class Meta {
 				continue;
 			}
 
-			$label = sanitize_text_field( (string) ( $item['label'] ?? '' ) );
-			$text  = sanitize_textarea_field( (string) ( $item['value'] ?? '' ) );
-			$label = mb_substr( $label, 0, self::MAX_LABEL_LENGTH );
-			$text  = mb_substr( $text, 0, self::MAX_VALUE_LENGTH );
+			$raw_label = $item['label'] ?? '';
+			$raw_text  = $item['value'] ?? '';
+			$label     = is_scalar( $raw_label ) ? sanitize_text_field( (string) $raw_label ) : '';
+			$text      = is_scalar( $raw_text ) ? sanitize_textarea_field( (string) $raw_text ) : '';
+			$label     = mb_substr( $label, 0, self::MAX_LABEL_LENGTH );
+			$text      = mb_substr( $text, 0, self::MAX_VALUE_LENGTH );
 
 			if ( '' === $label && '' === $text ) {
 				continue;
