@@ -153,12 +153,12 @@ final class Meta {
 	}
 
 	/**
-	 * Hides password-protected event details from public REST responses.
+	 * Hides event details when the event is not viewable in REST responses.
 	 *
-	 * WordPress hides protected post content in the REST API but includes
-	 * registered post meta in the same response. Keep this meta aligned with
-	 * the rendered block unless the reader has passed the post password or can
-	 * edit the post.
+	 * WordPress may include registered post meta when its REST permissions allow
+	 * a post that GatherPress event blocks do not consider viewable. Match the
+	 * event block's visibility check and keep password-protected details private
+	 * unless the reader has passed the post password or can edit the post.
 	 *
 	 * @since 0.1.0
 	 *
