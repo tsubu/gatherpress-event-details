@@ -22,7 +22,13 @@ const globals = requireFromScripts( 'globals' );
 
 module.exports = [
 	{
-		ignores: [ 'build/**', 'coverage/**', 'node_modules/**', 'vendor/**' ],
+		ignores: [
+			'**/._*',
+			'build/**',
+			'coverage/**',
+			'node_modules/**',
+			'vendor/**',
+		],
 	},
 	...wpPlugin.configs[ 'recommended-with-formatting' ],
 	{
