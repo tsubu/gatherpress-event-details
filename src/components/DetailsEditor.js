@@ -30,6 +30,20 @@ import {
 } from '../helpers/items';
 
 /**
+ * Limits a string by Unicode code points, matching the server-side character cap.
+ *
+ * HTML's `maxLength` counts UTF-16 code units, so the input cap is set to twice
+ * the server limit while this function enforces the actual code-point limit.
+ *
+ * @param {string} value     The input value.
+ * @param {number} maxLength The maximum number of code points.
+ * @return {string} The value within the limit.
+ */
+function limitByCodePoints( value, maxLength ) {
+	return Array.from( value ).slice( 0, maxLength ).join( '' );
+}
+
+/**
  * Edits the details of one event.
  *
  * Reads and writes the `gatherpress_event_details` post meta through the
@@ -77,7 +91,7 @@ export default function DetailsEditor( { postId, postType } ) {
 							__( 'Label %d', 'gatherpress-event-details' ),
 							index + 1,
 						) }
-						maxLength={ maxLabelLength }
+						maxLength={ maxLabelLength * 2 }
 						help={ sprintf(
 							/* translators: %d: maximum number of characters. */
 							__(
@@ -89,7 +103,14 @@ export default function DetailsEditor( { postId, postType } ) {
 						value={ item.label }
 						list={ labelSuggestions.length ? listId : undefined }
 						onChange={ ( label ) =>
-							setItems( updateItem( items, index, { label } ) )
+							setItems(
+								updateItem( items, index, {
+									label: limitByCodePoints(
+										label,
+										maxLabelLength,
+									),
+								} ),
+							)
 						}
 					/>
 					<TextareaControl
@@ -97,7 +118,7 @@ export default function DetailsEditor( { postId, postType } ) {
 							'Description',
 							'gatherpress-event-details',
 						) }
-						maxLength={ maxValueLength }
+						maxLength={ maxValueLength * 2 }
 						help={ sprintf(
 							/* translators: %d: maximum number of characters. */
 							__(
@@ -109,7 +130,14 @@ export default function DetailsEditor( { postId, postType } ) {
 						value={ item.value }
 						rows={ 2 }
 						onChange={ ( value ) =>
-							setItems( updateItem( items, index, { value } ) )
+							setItems(
+								updateItem( items, index, {
+									value: limitByCodePoints(
+										value,
+										maxValueLength,
+									),
+								} ),
+							)
 						}
 					/>
 					<HStack justify="flex-start">
