@@ -4,16 +4,19 @@
 
 	.gatherpress-event-details__item {
 		display: grid;
-		grid-template-columns: minmax(8rem, max-content) 1fr;
+		grid-template-columns: minmax(min(8rem, 40%), 40%) minmax(0, 1fr);
 		gap: 0.25rem 1rem;
 	}
 
 	.gatherpress-event-details__label {
 		font-weight: var(--gatherpress-event-details--label-font-weight, 600);
+		overflow-wrap: anywhere;
 	}
 
 	.gatherpress-event-details__value {
+		min-width: 0;
 		margin: 0;
+		overflow-wrap: anywhere;
 	}
 
 	.gatherpress-event-details__placeholder {
