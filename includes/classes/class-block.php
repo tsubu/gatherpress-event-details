@@ -42,13 +42,14 @@ final class Block {
 	/**
 	 * The GatherPress pattern used as the Block Hooks anchor for events.
 	 *
-	 * Mirrors `GatherPress\Core\Event::TEMPLATE_PATTERN`.
+	 * GatherPress exposes this constant for companion plugins to avoid copying
+	 * the pattern name.
 	 *
 	 * @since 0.1.0
 	 *
 	 * @var string
 	 */
-	const EVENT_TEMPLATE_PATTERN = 'gatherpress/event-template';
+	const EVENT_TEMPLATE_PATTERN = Event::TEMPLATE_PATTERN;
 
 	/**
 	 * The GatherPress starter pattern offered for new events.
