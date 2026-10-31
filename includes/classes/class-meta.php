@@ -175,6 +175,12 @@ final class Meta {
 	): \WP_REST_Response {
 		$password = $request->get_param( 'password' );
 
+		if ( ! Event::is_viewable( $post->ID ) ) {
+			unset( $response->data['meta'][ self::META_KEY ] );
+
+			return $response;
+		}
+
 		if (
 			! post_password_required( $post )
 			|| current_user_can( 'edit_post', $post->ID )
