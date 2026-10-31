@@ -11,6 +11,7 @@ namespace GatherPress_Event_Details;
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit; // @codeCoverageIgnore
 
+use GatherPress\Core\Event\Event;
 use GatherPress\Core\Traits\Singleton;
 
 /**
@@ -47,7 +48,7 @@ final class Meta {
 	 *
 	 * @var string
 	 */
-	const EVENT_SUPPORT = 'gatherpress-event-date';
+	const EVENT_SUPPORT = Event::SUPPORT;
 
 	/**
 	 * The maximum number of items stored per event.
