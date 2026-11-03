@@ -1,0 +1,15 @@
+includes:
+	- vendor/szepeviktor/phpstan-wordpress/extension.neon
+
+parameters:
+	level: 6
+	paths:
+		- gatherpress-event-details.php
+		- includes
+		- uninstall.php
+	scanDirectories:
+		- ../gatherpress/includes/core/classes
+	bootstrapFiles:
+		- test/phpstan-bootstrap.php
+	ignoreErrors:
+		- identifier: missingType.iterableValue

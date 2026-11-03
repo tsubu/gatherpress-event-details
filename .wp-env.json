@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/wp-env.json",
+	"phpVersion": "8.2",
+	"plugins": [
+		"https://downloads.wordpress.org/plugin/gatherpress.0.36.1.zip",
+		"."
+	],
+	"themes": [
+		"WordPress/twentytwentyfive"
+	],
+	"config": {
+		"WP_DEBUG": true,
+		"SCRIPT_DEBUG": true
+	}
+}
