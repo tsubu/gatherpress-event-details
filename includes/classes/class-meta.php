@@ -184,7 +184,11 @@ final class Meta {
 		if (
 			! post_password_required( $post )
 			|| current_user_can( 'edit_post', $post->ID )
-			|| ( is_string( $password ) && '' !== $post->post_password && hash_equals( $post->post_password, $password ) )
+			|| (
+				is_string( $password )
+				&& '' !== $post->post_password
+				&& hash_equals( $post->post_password, $password )
+			)
 		) {
 			return $response;
 		}
